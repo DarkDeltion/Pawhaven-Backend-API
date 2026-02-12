@@ -3,7 +3,7 @@
 services:
 
   db:
-    image: docker.io/library/postgres:16
+    image: postgres:16
     container_name: fastapi_postgres
     environment:
       POSTGRES_USER: postgres
@@ -21,6 +21,7 @@ services:
       DATABASE_URL: postgresql://postgres:password@db:5432/mydatabase
     depends_on:
       - db
+    command: ["python", "wait_for_db.py", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 volumes:
   db_data:
